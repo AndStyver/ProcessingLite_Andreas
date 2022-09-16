@@ -13,6 +13,11 @@ public class FollowMeBallScript : ProcessingLite.GP21
 
     public float speed;
 
+    float randomX = 1;
+    float randomY = 1;
+    public float xSpeed;
+    public float ySpeed;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +31,15 @@ public class FollowMeBallScript : ProcessingLite.GP21
         StrokeWeight(1);
         Stroke(255);
         Circle(x, y, diameter);
+
+        randomX = randomX + (xSpeed / 10);
+        randomY = randomY + (ySpeed / 10);
+
+        if (randomX > Width || randomX <= 0) { xSpeed *= -1; }
+        if (randomY > Height || randomY <= 0) { ySpeed *= -1; }
+
+
+        Circle(randomX, randomY, 0.2f);
 
         mousePos = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y));
 

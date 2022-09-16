@@ -255,3 +255,5 @@ MonoBehaviour:
   y: 7.03
   diameter: 1
   speed: 0.4
+  xSpeed: 0.1
+  ySpeed: 0.1
