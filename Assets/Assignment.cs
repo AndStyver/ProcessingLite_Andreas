@@ -168,7 +168,7 @@ public class Assignment : ProcessingLite.GP21
 
     Vector2 RandomVector()
     {
-        Vector2 vector = new Vector2(Random.Range(0, 22), Random.Range(0, 10));
+        Vector2 vector = new(Random.Range(0, 22), Random.Range(0, 10));
 
         return (vector);
     }

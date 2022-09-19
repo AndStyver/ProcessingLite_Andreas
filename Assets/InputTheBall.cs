@@ -10,9 +10,11 @@ public class InputTheBall : ProcessingLite.GP21
     public float ballSpeed;
 
     float v = 1;
-    int a = 1;
+    float a = 1; //acceleration of gravity
+    public float weight; //how much the ball is affected by gravity
 
     public bool gravity;
+    [SerializeField] float acceleration; //acceleration in movement
 
     // Start is called before the first frame update
     void Start()
@@ -25,15 +27,35 @@ public class InputTheBall : ProcessingLite.GP21
     void Update()
     {
         Background(0);
-        v += a * Time.deltaTime; //constant acceleration
-
-        posX += Input.GetAxis("Horizontal") * ballSpeed * Time.deltaTime;
 
 
-        if (gravity) { posY += -v * Time.deltaTime; }
-        else { posY += Input.GetAxis("Vertical") * ballSpeed * Time.deltaTime; }
+        if (Input.GetAxis("Horizontal") != 0)
+        {
+            acceleration += Time.deltaTime;
+            posX += Input.GetAxis("Horizontal") * ballSpeed * Time.deltaTime * acceleration;
+        }
+        else
+        {
+            if (acceleration > 0)
+                acceleration -= Time.deltaTime;
+        }
 
-        if (Input.GetKeyDown(KeyCode.G)) { gravity = !gravity; }
+        //if gravity is on, fall down
+        if (gravity)
+        {
+            posY += a * Time.deltaTime;
+            a -= Time.deltaTime * weight;
+        }
+        else
+        {
+            posY += Input.GetAxis("Vertical") * ballSpeed * Time.deltaTime;
+        }
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            gravity = !gravity;
+            a = 0;
+        } //toggle on/off gravity with g
 
         Circle(posX, posY, diameter);
     }
