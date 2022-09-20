@@ -15,6 +15,7 @@ public class InputTheBall : ProcessingLite.GP21
 
     public bool gravity;
     [SerializeField] float acceleration; //acceleration in movement
+    [SerializeField] float verAcceleration; //acceleration of vertical movement
     [SerializeField] float maxSpeed = 3; //maxSpeed of the ball
 
     // Start is called before the first frame update
@@ -29,12 +30,22 @@ public class InputTheBall : ProcessingLite.GP21
     {
         Background(0);
 
+        HorizontalMovement();
+        VerticalMovement();
+
+        Gravity();
+
+        Circle(posX, posY, diameter);
+    }
+
+    private void HorizontalMovement()
+    {
         if (Input.GetAxisRaw("Horizontal") > 0 && acceleration <= maxSpeed)
         {
             acceleration += Time.deltaTime;
             posX += Input.GetAxis("Horizontal") * ballSpeed * Time.deltaTime * acceleration;
         }
-        else if(Input.GetAxisRaw("Horizontal") < 0 && acceleration <= maxSpeed)
+        else if (Input.GetAxisRaw("Horizontal") < 0 && acceleration <= maxSpeed)
         {
             acceleration -= Time.deltaTime;
             posX -= Input.GetAxis("Horizontal") * ballSpeed * Time.deltaTime * acceleration;
@@ -49,23 +60,51 @@ public class InputTheBall : ProcessingLite.GP21
             posX += ballSpeed * Time.deltaTime * acceleration;
         }
 
+        if (0 + acceleration < 0.01f && 0 - acceleration < 0.01f) { acceleration = 0; }
+    }
+
+    void VerticalMovement()
+    {
         //if gravity is on, fall down
         if (gravity)
         {
             posY += a * Time.deltaTime;
             a -= Time.deltaTime * weight;
         }
-        else
+        else //else move with arrowkeys
         {
-            posY += Input.GetAxis("Vertical") * ballSpeed * Time.deltaTime;
-        }
+            if (Input.GetAxisRaw("Vertical") > 0 && verAcceleration <= maxSpeed)
+            {
+                verAcceleration += Time.deltaTime;
+                posY += Input.GetAxis("Vertical") * ballSpeed * Time.deltaTime * verAcceleration;
+            }
+            else if (Input.GetAxisRaw("Vertical") < 0 && verAcceleration <= maxSpeed)
+            {
+                verAcceleration -= Time.deltaTime;
+                posY -= Input.GetAxis("Vertical") * ballSpeed * Time.deltaTime * verAcceleration;
+            }
+            else
+            {
+                if (verAcceleration > 0)
+                    verAcceleration -= Time.deltaTime;
+                else if (verAcceleration < 0)
+                    verAcceleration += Time.deltaTime;
 
+                posY += ballSpeed * Time.deltaTime * verAcceleration;
+            }
+
+            if (0 + verAcceleration < 0.01f && 0 - verAcceleration < 0.01f) { verAcceleration = 0; }
+            //posY += Input.GetAxis("Vertical") * ballSpeed * Time.deltaTime;
+        }
+    }
+
+    private void Gravity()
+    {
+        //toggle on/off gravity with g
         if (Input.GetKeyDown(KeyCode.G))
         {
             gravity = !gravity;
             a = 0;
-        } //toggle on/off gravity with g
-
-        Circle(posX, posY, diameter);
+        }
     }
 }
