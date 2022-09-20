@@ -15,6 +15,7 @@ public class InputTheBall : ProcessingLite.GP21
 
     public bool gravity;
     [SerializeField] float acceleration; //acceleration in movement
+    [SerializeField] float maxSpeed = 3; //maxSpeed of the ball
 
     // Start is called before the first frame update
     void Start()
@@ -28,16 +29,24 @@ public class InputTheBall : ProcessingLite.GP21
     {
         Background(0);
 
-
-        if (Input.GetAxis("Horizontal") != 0)
+        if (Input.GetAxisRaw("Horizontal") > 0 && acceleration <= maxSpeed)
         {
             acceleration += Time.deltaTime;
             posX += Input.GetAxis("Horizontal") * ballSpeed * Time.deltaTime * acceleration;
+        }
+        else if(Input.GetAxisRaw("Horizontal") < 0 && acceleration <= maxSpeed)
+        {
+            acceleration -= Time.deltaTime;
+            posX -= Input.GetAxis("Horizontal") * ballSpeed * Time.deltaTime * acceleration;
         }
         else
         {
             if (acceleration > 0)
                 acceleration -= Time.deltaTime;
+            else if (acceleration < 0)
+                acceleration += Time.deltaTime;
+
+            posX += ballSpeed * Time.deltaTime * acceleration;
         }
 
         //if gravity is on, fall down
