@@ -12,8 +12,8 @@ public class InputTheBall : ProcessingLite.GP21
     float v = 1;
     float a = 1; //acceleration of gravity
     public float weight; //how much the ball is affected by gravity
-
     public bool gravity;
+
     [SerializeField] float acceleration; //acceleration in movement
     [SerializeField] float verAcceleration; //acceleration of vertical movement
     [SerializeField] float maxSpeed = 3; //maxSpeed of the ball
@@ -35,6 +35,8 @@ public class InputTheBall : ProcessingLite.GP21
 
         Gravity();
 
+        ScreenWrap();
+
         Circle(posX, posY, diameter);
     }
 
@@ -45,7 +47,7 @@ public class InputTheBall : ProcessingLite.GP21
             acceleration += Time.deltaTime;
             posX += Input.GetAxis("Horizontal") * ballSpeed * Time.deltaTime * acceleration;
         }
-        else if (Input.GetAxisRaw("Horizontal") < 0 && acceleration <= maxSpeed)
+        else if (Input.GetAxisRaw("Horizontal") < 0 && acceleration >= -maxSpeed)
         {
             acceleration -= Time.deltaTime;
             posX -= Input.GetAxis("Horizontal") * ballSpeed * Time.deltaTime * acceleration;
@@ -78,7 +80,7 @@ public class InputTheBall : ProcessingLite.GP21
                 verAcceleration += Time.deltaTime;
                 posY += Input.GetAxis("Vertical") * ballSpeed * Time.deltaTime * verAcceleration;
             }
-            else if (Input.GetAxisRaw("Vertical") < 0 && verAcceleration <= maxSpeed)
+            else if (Input.GetAxisRaw("Vertical") < 0 && verAcceleration >= -maxSpeed)
             {
                 verAcceleration -= Time.deltaTime;
                 posY -= Input.GetAxis("Vertical") * ballSpeed * Time.deltaTime * verAcceleration;
@@ -106,5 +108,14 @@ public class InputTheBall : ProcessingLite.GP21
             gravity = !gravity;
             a = 0;
         }
+    }
+
+    void ScreenWrap()
+    {
+        if (posX < 0) { posX = Width; }
+        if (posX > Width) { posX = 0; }
+
+        if (posY > Height) { posY = Height; }
+        if (posY < 0) { posY = 0; }
     }
 }
