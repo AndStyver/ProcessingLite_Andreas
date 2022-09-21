@@ -12,11 +12,14 @@ public class InputTheBall : ProcessingLite.GP21
     float v = 1;
     float a = 1; //acceleration of gravity
     public float weight; //how much the ball is affected by gravity
-    public bool gravity;
+    public bool gravityBool;
 
     [SerializeField] float acceleration; //acceleration in movement
     [SerializeField] float verAcceleration; //acceleration of vertical movement
     [SerializeField] float maxSpeed = 3; //maxSpeed of the ball
+    int horMovDir; //horizontal moement direction 1 for right, - 1 for left
+    int verMovDir; //vertical movement direction 1 for up, -1 for down
+    Vector2 movementVector;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +39,7 @@ public class InputTheBall : ProcessingLite.GP21
         Gravity();
 
         ScreenWrap();
+        ScreenPeek();
 
         Circle(posX, posY, diameter);
     }
@@ -46,57 +50,58 @@ public class InputTheBall : ProcessingLite.GP21
         {
             acceleration += Time.deltaTime;
             posX += Input.GetAxis("Horizontal") * ballSpeed * Time.deltaTime * acceleration;
+            horMovDir = 1;
         }
-        else if (Input.GetAxisRaw("Horizontal") < 0 && acceleration >= -maxSpeed)
+        else if (Input.GetAxisRaw("Horizontal") < 0 && acceleration <= maxSpeed)
         {
-            acceleration -= Time.deltaTime;
-            posX -= Input.GetAxis("Horizontal") * ballSpeed * Time.deltaTime * acceleration;
+            acceleration += Time.deltaTime;
+            posX -= Input.GetAxis("Horizontal") * ballSpeed * Time.deltaTime * -acceleration;
+            horMovDir = -1;
         }
         else
         {
-            if (acceleration > 0)
-                acceleration -= Time.deltaTime;
-            else if (acceleration < 0)
-                acceleration += Time.deltaTime;
-
-            posX += ballSpeed * Time.deltaTime * acceleration;
+            if (acceleration > 0) { acceleration -= Time.deltaTime; }
+            posX += ballSpeed * Time.deltaTime * acceleration * horMovDir;
         }
 
-        if (0 + acceleration < 0.01f && 0 - acceleration < 0.01f) { acceleration = 0; }
+        //if (0 + acceleration < 0.01f && 0 - acceleration < 0.01f) { acceleration = 0; }
     }
 
     void VerticalMovement()
     {
         //if gravity is on, fall down
-        if (gravity)
+        if (gravityBool)
         {
-            posY += a * Time.deltaTime;
             a -= Time.deltaTime * weight;
+            posY += a * Time.deltaTime;
+
+            if(posY < 0)
+            {
+                a *= -0.95f;
+            }
+
+            return;
         }
-        else //else move with arrowkeys
+
+        //else move with arrowkeys
+        if (Input.GetAxisRaw("Vertical") > 0 && verAcceleration <= maxSpeed)
         {
-            if (Input.GetAxisRaw("Vertical") > 0 && verAcceleration <= maxSpeed)
-            {
-                verAcceleration += Time.deltaTime;
-                posY += Input.GetAxis("Vertical") * ballSpeed * Time.deltaTime * verAcceleration;
-            }
-            else if (Input.GetAxisRaw("Vertical") < 0 && verAcceleration >= -maxSpeed)
-            {
+            verAcceleration += Time.deltaTime;
+            posY += Input.GetAxis("Vertical") * ballSpeed * Time.deltaTime * verAcceleration;
+            verMovDir = 1;
+        }
+        else if (Input.GetAxisRaw("Vertical") < 0 && verAcceleration <= maxSpeed)
+        {
+            verAcceleration += Time.deltaTime;
+            posY -= Input.GetAxis("Vertical") * ballSpeed * Time.deltaTime * -verAcceleration;
+            verMovDir = -1;
+        }
+        else
+        {
+            if (verAcceleration > 0)
                 verAcceleration -= Time.deltaTime;
-                posY -= Input.GetAxis("Vertical") * ballSpeed * Time.deltaTime * verAcceleration;
-            }
-            else
-            {
-                if (verAcceleration > 0)
-                    verAcceleration -= Time.deltaTime;
-                else if (verAcceleration < 0)
-                    verAcceleration += Time.deltaTime;
 
-                posY += ballSpeed * Time.deltaTime * verAcceleration;
-            }
-
-            if (0 + verAcceleration < 0.01f && 0 - verAcceleration < 0.01f) { verAcceleration = 0; }
-            //posY += Input.GetAxis("Vertical") * ballSpeed * Time.deltaTime;
+            posY += ballSpeed * Time.deltaTime * verAcceleration * verMovDir;
         }
     }
 
@@ -105,8 +110,9 @@ public class InputTheBall : ProcessingLite.GP21
         //toggle on/off gravity with g
         if (Input.GetKeyDown(KeyCode.G))
         {
-            gravity = !gravity;
+            gravityBool = !gravityBool;
             a = 0;
+            verAcceleration = 0;
         }
     }
 
@@ -117,5 +123,19 @@ public class InputTheBall : ProcessingLite.GP21
 
         if (posY > Height) { posY = Height; }
         if (posY < 0) { posY = 0; }
+    }
+
+    void ScreenPeek()
+    {
+        if (posX - diameter < 0)
+        {
+            Circle(posX + Width, posY, diameter);
+            Debug.Log("Should peek right");
+        }
+        if (posX + diameter > Width)
+        {
+            Circle(posX - Width, posY, diameter);
+            Debug.Log("Should peek left");
+        }
     }
 }

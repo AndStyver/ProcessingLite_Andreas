@@ -220,9 +220,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcc1006f66d977e4d938e958c34aad02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diameter: 1
+  diameter: 12.64
   ballSpeed: 30
   weight: 100
   gravity: 0
   acceleration: 0
+  verAcceleration: 0
   maxSpeed: 3
