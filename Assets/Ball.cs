@@ -24,5 +24,8 @@ public class Ball : ProcessingLite.GP21
     public void MoveBall()
     {
         ballPos += ballVel * Time.deltaTime;
+
+        if(ballPos.x < 0||ballPos.x >Width) { ballVel.x *= -1; }
+        if (ballPos.y < 0 || ballPos.y > Height) { ballVel.y *= -1; }
     }
 }
