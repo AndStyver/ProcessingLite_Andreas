@@ -123,7 +123,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &653361746
+--- !u!1 &1904147869
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,10 +131,10 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 653361749}
-  - component: {fileID: 653361748}
-  - component: {fileID: 653361747}
-  - component: {fileID: 653361750}
+  - component: {fileID: 1904147872}
+  - component: {fileID: 1904147871}
+  - component: {fileID: 1904147870}
+  - component: {fileID: 1904147873}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -142,21 +142,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &653361747
+--- !u!81 &1904147870
 AudioListener:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 653361746}
+  m_GameObject: {fileID: 1904147869}
   m_Enabled: 1
---- !u!20 &653361748
+--- !u!20 &1904147871
 Camera:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 653361746}
+  m_GameObject: {fileID: 1904147869}
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
@@ -177,7 +177,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 67.58
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -193,13 +193,13 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!4 &653361749
+--- !u!4 &1904147872
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 653361746}
+  m_GameObject: {fileID: 1904147869}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -208,22 +208,15 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &653361750
+--- !u!114 &1904147873
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 653361746}
+  m_GameObject: {fileID: 1904147869}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcc1006f66d977e4d938e958c34aad02, type: 3}
+  m_Script: {fileID: 11500000, guid: f9c4025eac5d4dc4e90b8154dbf642e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diameter: 12.64
-  ballSpeed: 30
-  weight: 100
-  gravityBool: 0
-  acceleration: 0
-  verAcceleration: 0
-  maxSpeed: 3

@@ -32,6 +32,7 @@ public class InputTheBall : ProcessingLite.GP21
     void Update()
     {
         Background(0);
+        StrokeWeight(2);
 
         HorizontalMovement();
         VerticalMovement();
@@ -75,11 +76,10 @@ public class InputTheBall : ProcessingLite.GP21
             a -= Time.deltaTime * weight;
             posY += a * Time.deltaTime;
 
-            if(posY < 0)
+            if (posY < 0)
             {
                 a *= -0.95f;
             }
-
             return;
         }
 
@@ -130,12 +130,12 @@ public class InputTheBall : ProcessingLite.GP21
         if (posX - diameter < 0)
         {
             Circle(posX + Width, posY, diameter);
-            Debug.Log("Should peek right");
+            //Debug.Log("Should peek right");
         }
         if (posX + diameter > Width)
         {
             Circle(posX - Width, posY, diameter);
-            Debug.Log("Should peek left");
+            //Debug.Log("Should peek left");
         }
     }
 }
