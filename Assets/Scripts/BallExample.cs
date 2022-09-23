@@ -4,20 +4,16 @@ using UnityEngine;
 
 public class BallExample : ProcessingLite.GP21
 {
-    Ball myBall;
-
     [SerializeField] int numOfBalls = 10; //how many balls we wanna create
     [SerializeField] Ball[] myBalls; //the array containing our balls
 
     // Start is called before the first frame update
     void Start()
     {
-        myBall = new Ball(5, 5);
-       
         myBalls = new Ball[numOfBalls];
         for (int i = 0; i < myBalls.Length; i++)
         {
-            myBalls[i] = new Ball(5, 5);
+            myBalls[i] = new Ball(Random.Range(0, Width), Random.Range(0, Height), Random.Range(0.2f, 1f));
         }
     }
 
@@ -26,14 +22,25 @@ public class BallExample : ProcessingLite.GP21
     {
         Background(0);
 
-
         for (int i = 0; i < numOfBalls; i++)
         {
-            myBalls[i].MoveBall();
             myBalls[i].Draw();
+            myBalls[i].MoveBall();
         }
 
-        myBall.MoveBall();
-        myBall.Draw();
+        //start at ball[0] check the first ball against every ball after it in the array
+        //afterwards, jump out one loop, go up one and repeat
+        for (int i = 0; i < myBalls.Length; i++)
+        {
+            for (int j = i + 1; j < myBalls.Length; j++) //
+            {
+                if (myBalls[i].CircleCollision(myBalls[i], myBalls[j]))
+                {
+                    myBalls[i].ballVel *= -1;
+                    myBalls[j].ballVel *= -1;
+                }
+            }
+        }
+
     }
 }
