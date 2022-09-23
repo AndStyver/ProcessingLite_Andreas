@@ -22,11 +22,13 @@ public class InputTheBall : ProcessingLite.GP21
     Vector2 movementVector;
 
     BallExample ballManager;
+    GameOverManager gameOver;
 
     // Start is called before the first frame update
     void Start()
     {
         ballManager = GetComponent<BallExample>();
+        gameOver = GetComponent<GameOverManager>();
 
         posX = Width / 2;
         posY = Height / 2;
@@ -159,19 +161,18 @@ public class InputTheBall : ProcessingLite.GP21
 
         if (Mathf.Abs(posX - _collision.ballPos.x) > maxDistance || Mathf.Abs(posY - _collision.ballPos.y) > maxDistance)
         {
-            Debug.Log("Absolute position too big");
+            //Debug.Log("Absolute position too big");
             return;
         }
         else if (Vector2.Distance(new(posX, posY), new(_collision.ballPos.x, _collision.ballPos.y)) > maxDistance)
         {
-            Debug.Log("Vector2.Distance too big");
+            //Debug.Log("Vector2.Distance too big");
             return;
         }
         else
         {
-            //run game over code
-            Debug.Log("Player Hit");
-            return;
+            //Debug.Log("Player Hit");
+            gameOver.gameoverBool = true;
         }
     }
 
