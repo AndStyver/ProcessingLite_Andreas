@@ -21,6 +21,8 @@ public class Ball : ProcessingLite.GP21
 
     public void Draw()
     {
+        Stroke(255, 0, 0);
+        StrokeWeight(0.5f);
         Circle(ballPos.x, ballPos.y, ballSize);
     }
 
@@ -34,7 +36,7 @@ public class Ball : ProcessingLite.GP21
 
     public bool CircleCollision(Ball _ball1, Ball _ball2)
     {
-        float maxDistance = _ball1.ballSize/2 + _ball2.ballSize/2;
+        float maxDistance = _ball1.ballSize / 2 + _ball2.ballSize / 2;
 
         if (Mathf.Abs(_ball1.ballPos.x - _ball2.ballPos.x) > maxDistance || Mathf.Abs(_ball1.ballPos.y - _ball2.ballPos.y) > maxDistance)
         {

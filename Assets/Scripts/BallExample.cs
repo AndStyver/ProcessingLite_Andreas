@@ -21,7 +21,6 @@ public class BallExample : ProcessingLite.GP21
     void Update()
     {
         Background(0);
-
         for (int i = 0; i < numOfBalls; i++)
         {
             myBalls[i].Draw();

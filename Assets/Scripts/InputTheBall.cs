@@ -31,7 +31,6 @@ public class InputTheBall : ProcessingLite.GP21
     // Update is called once per frame
     void Update()
     {
-        Background(0);
         StrokeWeight(2);
 
         HorizontalMovement();
@@ -42,6 +41,9 @@ public class InputTheBall : ProcessingLite.GP21
         ScreenWrap();
         ScreenPeek();
 
+
+        Stroke(0, 0, 255);
+        StrokeWeight(1);
         Circle(posX, posY, diameter);
     }
 
@@ -129,11 +131,15 @@ public class InputTheBall : ProcessingLite.GP21
     {
         if (posX - diameter < 0)
         {
+            Stroke(0, 0, 255);
+            StrokeWeight(1);
             Circle(posX + Width, posY, diameter);
             //Debug.Log("Should peek right");
         }
         if (posX + diameter > Width)
         {
+            Stroke(0, 0, 255);
+            StrokeWeight(1);
             Circle(posX - Width, posY, diameter);
             //Debug.Log("Should peek left");
         }
