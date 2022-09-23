@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class InputTheBall : ProcessingLite.GP21
 {
-    float posX;
-    float posY;
+  public   float posX;
+    public float posY;
     public float diameter;
     public float ballSpeed;
 
