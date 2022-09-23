@@ -5,7 +5,7 @@ using UnityEngine;
 public class BallExample : ProcessingLite.GP21
 {
     [SerializeField] int numOfBalls = 10; //how many balls we wanna create
-    [SerializeField] Ball[] myBalls; //the array containing our balls
+    public Ball[] myBalls; //the array containing our balls
 
     // Start is called before the first frame update
     void Start()

@@ -21,9 +21,13 @@ public class InputTheBall : ProcessingLite.GP21
     int verMovDir; //vertical movement direction 1 for up, -1 for down
     Vector2 movementVector;
 
+    BallExample ballManager;
+
     // Start is called before the first frame update
     void Start()
     {
+        ballManager = GetComponent<BallExample>();
+
         posX = Width / 2;
         posY = Height / 2;
     }
@@ -41,6 +45,10 @@ public class InputTheBall : ProcessingLite.GP21
         ScreenWrap();
         ScreenPeek();
 
+        for (int i = 0; i < ballManager.myBalls.Length; i++)
+        {
+            CheckCollision(ballManager.myBalls[i]);
+        }
 
         Stroke(0, 0, 255);
         StrokeWeight(1);
@@ -144,4 +152,27 @@ public class InputTheBall : ProcessingLite.GP21
             //Debug.Log("Should peek left");
         }
     }
+
+    void CheckCollision(Ball _collision)
+    {
+        float maxDistance = diameter / 2 + _collision.ballSize / 2;
+
+        if (Mathf.Abs(posX - _collision.ballPos.x) > maxDistance || Mathf.Abs(posY - _collision.ballPos.y) > maxDistance)
+        {
+            Debug.Log("Absolute position too big");
+            return;
+        }
+        else if (Vector2.Distance(new(posX, posY), new(_collision.ballPos.x, _collision.ballPos.y)) > maxDistance)
+        {
+            Debug.Log("Vector2.Distance too big");
+            return;
+        }
+        else
+        {
+            //run game over code
+            Debug.Log("Player Hit");
+            return;
+        }
+    }
+
 }

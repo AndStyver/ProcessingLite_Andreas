@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Ball : ProcessingLite.GP21
 {
-    Vector2 ballPos; //POSition of our ball
+    public Vector2 ballPos; //POSition of our ball
     public Vector2 ballVel; //VELocity of our ball
     public float ballSize;
 
@@ -43,7 +43,7 @@ public class Ball : ProcessingLite.GP21
             return false;
         }
 
-        else if (Vector2.Distance(new Vector2(_ball1.ballPos.x, _ball1.ballPos.y), new(_ball2.ballPos.x, _ball2.ballPos.y)) > maxDistance)
+        else if (Vector2.Distance(new(_ball1.ballPos.x, _ball1.ballPos.y), new(_ball2.ballPos.x, _ball2.ballPos.y)) > maxDistance)
         {
             return false;
         }
