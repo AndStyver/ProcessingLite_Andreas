@@ -49,6 +49,8 @@ public class GameOverManager : ProcessingLite.GP21
             ballManager.GenerateBalls();
             playerManager.ResetGame();
 
+            ballManager.ballList = new List<Ball>(ballManager.myBalls);
+
             gameoverBool = false;
         }
     }

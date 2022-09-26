@@ -19,7 +19,7 @@ public class BallExample : ProcessingLite.GP21
     {
         for (int i = 0; i < myBalls.Length; i++)
         {
-            myBalls[i] = new Ball(Random.Range(0, Width), Random.Range(0, Height), Random.Range(0.2f, 1f));
+            myBalls[i] = new Ball(Random.Range(0, Width), Random.Range(0, Height), Random.Range(1f, 4f));
         }
         ballList.AddRange(myBalls);
     }
@@ -31,6 +31,11 @@ public class BallExample : ProcessingLite.GP21
         DrawBalls();
 
         BallCollisions();
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            ballList.Add(new Ball(Random.Range(0, Width), Random.Range(0, Height), Random.Range(1f, 4f)));
+        }
     }
 
     public void DrawBalls()

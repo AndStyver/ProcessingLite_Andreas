@@ -47,9 +47,9 @@ public class InputTheBall : ProcessingLite.GP21
         ScreenWrap();
         ScreenPeek();
 
-        for (int i = 0; i < ballManager.myBalls.Length; i++)
+        for (int i = 0; i < ballManager.ballList.Count; i++)
         {
-            CheckCollision(ballManager.myBalls[i]);
+            CheckCollision(ballManager.ballList[i]);
         }
 
         Stroke(0, 0, 255);
