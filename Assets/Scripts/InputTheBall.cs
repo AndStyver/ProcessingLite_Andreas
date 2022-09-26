@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class InputTheBall : ProcessingLite.GP21
 {
-  public   float posX;
-    public float posY;
+    float posX;
+    float posY;
     public float diameter;
     public float ballSpeed;
 
@@ -14,7 +14,7 @@ public class InputTheBall : ProcessingLite.GP21
     public float weight; //how much the ball is affected by gravity
     public bool gravityBool;
 
-    [SerializeField] float acceleration; //acceleration in movement
+    [SerializeField] float horAcceleration; //acceleration in horizontal movement
     [SerializeField] float verAcceleration; //acceleration of vertical movement
     [SerializeField] float maxSpeed = 3; //maxSpeed of the ball
     int horMovDir; //horizontal moement direction 1 for right, - 1 for left
@@ -59,22 +59,22 @@ public class InputTheBall : ProcessingLite.GP21
 
     private void HorizontalMovement()
     {
-        if (Input.GetAxisRaw("Horizontal") > 0 && acceleration <= maxSpeed)
+        if (Input.GetAxisRaw("Horizontal") > 0 && horAcceleration <= maxSpeed)
         {
-            acceleration += Time.deltaTime;
-            posX += Input.GetAxis("Horizontal") * ballSpeed * Time.deltaTime * acceleration;
+            horAcceleration += Time.deltaTime;
+            posX += Input.GetAxis("Horizontal") * ballSpeed * Time.deltaTime * horAcceleration;
             horMovDir = 1;
         }
-        else if (Input.GetAxisRaw("Horizontal") < 0 && acceleration <= maxSpeed)
+        else if (Input.GetAxisRaw("Horizontal") < 0 && horAcceleration <= maxSpeed)
         {
-            acceleration += Time.deltaTime;
-            posX -= Input.GetAxis("Horizontal") * ballSpeed * Time.deltaTime * -acceleration;
+            horAcceleration += Time.deltaTime;
+            posX -= Input.GetAxis("Horizontal") * ballSpeed * Time.deltaTime * -horAcceleration;
             horMovDir = -1;
         }
         else
         {
-            if (acceleration > 0) { acceleration -= Time.deltaTime; }
-            posX += ballSpeed * Time.deltaTime * acceleration * horMovDir;
+            if (horAcceleration > 0) { horAcceleration -= Time.deltaTime; }
+            posX += ballSpeed * Time.deltaTime * horAcceleration * horMovDir;
         }
 
         //if (0 + acceleration < 0.01f && 0 - acceleration < 0.01f) { acceleration = 0; }
@@ -174,6 +174,15 @@ public class InputTheBall : ProcessingLite.GP21
             //Debug.Log("Player Hit");
             gameOver.gameoverBool = true;
         }
+    }
+
+    public void ResetGame()
+    {
+        posX = Width / 2;
+        posY = Height / 2;
+
+        verAcceleration = 0;
+        horAcceleration = 0;
     }
 
 }

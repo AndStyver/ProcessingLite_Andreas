@@ -19,7 +19,6 @@ public class GameOverManager : ProcessingLite.GP21
         ballManager = GetComponent<BallExample>();
         playerManager = GetComponent<InputTheBall>();
         Background(255);
-
     }
 
     // Update is called once per frame
@@ -48,8 +47,7 @@ public class GameOverManager : ProcessingLite.GP21
         {
             Background(255);
             ballManager.GenerateBalls();
-            playerManager.posX = Width / 2;
-            playerManager.posY = Height / 2;
+            playerManager.ResetGame();
 
             gameoverBool = false;
         }

@@ -5,7 +5,8 @@ using UnityEngine;
 public class BallExample : ProcessingLite.GP21
 {
     [SerializeField] int numOfBalls = 10; //how many balls we wanna create
-    public Ball[] myBalls; //the array containing our balls
+    public Ball[] myBalls; //the array containing our balls at the start
+    public List<Ball> ballList; //convert to a list so we can add more later
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +21,7 @@ public class BallExample : ProcessingLite.GP21
         {
             myBalls[i] = new Ball(Random.Range(0, Width), Random.Range(0, Height), Random.Range(0.2f, 1f));
         }
+        ballList.AddRange(myBalls);
     }
 
     // Update is called once per frame
@@ -33,25 +35,25 @@ public class BallExample : ProcessingLite.GP21
 
     public void DrawBalls()
     {
-        for (int i = 0; i < numOfBalls; i++)
+        for (int i = 0; i < ballList.Count; i++)
         {
-            myBalls[i].Draw();
-            myBalls[i].MoveBall();
+            ballList[i].Draw();
+            ballList[i].MoveBall();
         }
     }
 
     private void BallCollisions()
     {
-        //start at ball[0] check the first ball against every ball after it in the array
-        //afterwards, jump out one loop, go up one and repeat
-        for (int i = 0; i < myBalls.Length; i++)
+        //start at ball[0] check the first ball against every ball after it in the array, jump into the inner loop
+        //afterwards, jump out one loop, i goes up one and repeat
+        for (int i = 0; i < ballList.Count; i++)
         {
-            for (int j = i + 1; j < myBalls.Length; j++) //
+            for (int j = i + 1; j < ballList.Count; j++) //for the current ball, check ball against all after it, then jump out
             {
-                if (myBalls[i].CircleCollision(myBalls[i], myBalls[j]))
+                if (ballList[i].CircleCollision(ballList[i], ballList[j]))
                 {
-                    myBalls[i].ballVel *= -1;
-                    myBalls[j].ballVel *= -1;
+                    ballList[i].ballVel *= -1;
+                    ballList[j].ballVel *= -1;
                 }
             }
         }
