@@ -22,15 +22,34 @@ public class ApocalypseHandler : ProcessingLite.GP21
     {
         Background(0);
 
-        for (int i = 0; i < charsToSpawn; i++)
+        for (int i = 0; i < characters.Count; i++)
         {
             characters[i].Draw(0, 0, 255);
             characters[i].UpdateCharacters();
         }
-        for (int i = 0; i < zombiesToSpawn; i++)
+        for (int i = 0; i < zombies.Count; i++)
         {
             zombies[i].Draw(0, 255, 0);
             zombies[i].UpdateCharacters();
+        }
+
+        CheckZombieCollision();
+    }
+
+    void CheckZombieCollision()
+    {
+        //start for all zombies
+        for (int i = 0; i < zombies.Count; i++)
+        {
+            for (int j = 0; j < characters.Count; j++) //check zombies against all humans
+            {
+                if (zombies[i].CircleCollision(zombies[i], characters[j]))
+                {
+                    characters.RemoveAt(j);
+                    zombies.Add(new Zombie(zombies[i].charPos.x, zombies[i].charPos.y, 0.5f));
+                    zombies[i].charVel *= -1;
+                }
+            }
         }
     }
 }
